@@ -1,0 +1,34 @@
+<% title "VEDAVAAG | VLE | Verification" %>
+<h3>VEDAVAAG | VLE | VLE Verification</h3>
+
+<div class="help_text">
+  Area for VLE Verification. <br/>
+  Enter your verification received by SMS on Registered Mobile Number.
+</div>
+<div class="form-container">
+  <p class="legend">
+    <strong>Note:</strong>
+    Required fields are marked with an asterisk (<em>*</em>)
+  </p>
+  <%= form_tag verification_users_path do -%>
+      <table class="tablesorter" align="center">
+
+        <tr>
+          <td>
+            <label for="vle_user">
+              Enter Verification Code :
+            </label>
+          </td>
+
+          <td>
+            <%= text_field_tag :verification_code -%>
+          </td>
+        </tr>
+        <tr>
+          <td colspan='2' align="right">
+            <%= submit_tag 'Submit' -%>
+          </td>
+        </tr>
+      </table>
+      <% end -%>
+</div>

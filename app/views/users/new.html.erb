@@ -1,0 +1,11 @@
+<% title "VEDAVAAG | Users " %>
+<% content_for :sub_heading do %>
+    <%= sub_heading('VEDAVAAG | VLE','Create VLE') %>
+<% end %>
+<div class="help_text">
+  Area for VLE Registration. <br/>
+  A valid information should be given by VLE.<br/>
+  Please note that a verification code will be sent to the VLE mobile, which allow VLE to complete the Registration Process<br/>
+  Please provide mobile which is not registered under DNC or DND (Do Not Call or Do Not Disturb) registry.
+</div>
+<%= render 'form',:heading => 'Create New User' %>

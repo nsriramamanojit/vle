@@ -1,0 +1,32 @@
+<div class="form-container">
+  <p class="legend">
+    <strong>Note:</strong>
+    Required fields are marked with an asterisk (<em>*</em>)
+  </p>
+  <%= simple_form_for(@user, :validate => true) do |f| %>
+      <fieldset>
+        <%= f.input :name, :label => "Full Name", :placeholder => "Full Name" %>
+        <%= f.input :father_name, :label => "Father Name", :placeholder => "Father Name/Husband Name" %>
+        <%= f.input :email, :label => "Email", :placeholder => "user@example.com" %>
+        <%= f.input :gender, :collection => [:Male, :Female], :prompt => "Select Gender" %>
+        <%= f.input :dob, :label => "DOB", :as => :date, :start_year => Date.today.year,
+                    :end_year => Date.today.year - 60,
+                    :order => [:day, :month, :year] %>
+        <%= f.input :address1, :label => "Address", :placeholder => "Address" %>
+        <%= f.input :address2, :label => "Address", :placeholder => "Address" %>
+        <%= f.input :place, :label => "Place", :placeholder => "Village / Town Name" %>
+        <%= f.input :pin, :label => "PIN", :placeholder => "PIN code Must be 6 Digits" %>
+        <%= f.input :mobile_number, :label => "Mobile", :placeholder => "Mobile Number Must be 10 Digits" %>
+        <%= f.input :phone_number, :label => "Land/Alternative Phone", :placeholder => "Phone Number" %>
+        <%= f.simple_fields_for(:user_profile) do |up| %>
+            <%= up.input :state_id,:as=>:hidden,:input_html=>{:value=>1} %>
+            <%= up.association :division, :collection => Division.active.all(:order => 'name'), :prompt => "Select Division" %>
+            <%= up.association :district, :collection => District.active.all(:order => 'name'), :prompt => "Select District" %>
+            <%= up.association :block, :prompt => "Select Revenue Block", :label => "Block" %>
+            <%= up.input :panchayat,:placeholder =>"Panchayat Name",:label=>"Panchayat" %>
+        <% end %>
+
+        <%= f.submit 'Save', :disable_with => 'Please wait...' %>
+      </fieldset>
+  <% end %>
+</div>

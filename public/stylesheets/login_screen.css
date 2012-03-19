@@ -1,0 +1,99 @@
+body {
+	margin: 0;
+	padding: 0;
+	/*background-color: #f2f2f2;*/
+	background-color: #ffffff;
+	font-family: Tahoma,verdana,helvetica,sans-serif;
+	font-size: 12px;
+	color: #292929;
+	font-weight: normal;
+}
+.tabless {
+    margin: auto;
+    width: 480px;
+}
+
+.standalone {
+    /*background: #f5f5f5;*/
+    background: #ffffff;
+    border: 5px #b0c4de solid;
+    margin: 75px auto 6px auto;
+    padding: 20px;
+    width: 400px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+}
+
+.standalone input[type =
+"text"], .standalone input[type = "password"] {
+    font-size: 16px;
+    padding: 2px;
+    width: 355px;
+}
+
+.standalone input[type =
+"submit"] {
+    font-size: 2em;
+}
+
+.title {
+    border-bottom: 1px #808080 solid;
+    color: #342d7e;
+    font-size: 17px;
+    font-weight: bold;
+    padding-bottom: 2px;
+}
+
+.label {
+    color: #3f3f3f;
+    font-size: 12px;
+    margin: 8px 0px 0px 0px;
+}
+.section {
+    /*background: #f5f5f5;*/
+    background: #ffffff;
+    color: #3f3f3f;
+    margin: 0px 0px 2px 0px;
+    padding: 4px 15px 8px 15px;
+}
+.flash_error, .flash_notice, .flash_success,.flash_warning {
+	padding:10px 10px;margin-bottom:1em;margin-top:1em;border:1px solid #cccccc;
+    font-size:12px;
+    padding-left:30px;
+    border-radius: 5px 5px 5px 5px;
+	}
+.flash_error {
+	background:url("/images/flash/form-ic-error.png") no-repeat scroll 5px 10px #fad0d0;
+   border-color: #f6abab;
+/*    color: #b01717; */
+	}
+.flash_notice {
+	background:url("/images/flash/form-ic-info.png") no-repeat scroll 5px 10px #D1ECF7;
+    border-color: #00ccff;
+/*    color:#11689E;   */
+	}
+.flash_success {
+	background:url("/images/flash/form-ic-success.png") no-repeat scroll 5px 10px #e5f8ce;
+    border-color: #006600;
+/*    color: #62b548;     */
+ }
+ .flash_warning{
+ 	background:url("/images/flash/form-ic-warning.png") no-repeat scroll 5px 10px #fff6bf;
+    border-color: #fceb77;
+/*    color: #957210;   */
+ }
+.flash_error a {color: #11689e;}
+.flash_notice a {color: #11689e;}
+.flash_success a {color: #11689e;}
+.flash_warning a {color: #11689e;}
+
+.buttonbar {
+    border-top: 1px gray solid;
+    margin: 8px auto;
+    padding-top: 8px;
+}
+
+.formTextBox{
+    font-family: Tahoma, verdana, helvetica, sans-serif;
+    height:1.5em; line-height:1.5em; font-size:100%; padding:0;
+}
