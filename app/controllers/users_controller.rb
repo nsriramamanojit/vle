@@ -43,7 +43,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        #sms_status
+        sms_status
         format.html { redirect_to(new_user_path, :notice => 'User was successfully created.') }
         format.xml { render :xml => @user, :status => :created, :location => @user }
       else
