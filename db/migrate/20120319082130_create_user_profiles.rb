@@ -6,7 +6,8 @@ class CreateUserProfiles < ActiveRecord::Migration
       t.integer :division_id
       t.integer :district_id
       t.integer :block_id
-      t.string  :panchayat
+      t.string  :panchayat_id
+
       t.string  :csc_code         # CSC Code provided by Govt.
       t.string  :vle_code         # For internal Ref.
       t.text    :remarks

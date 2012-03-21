@@ -1,0 +1,95 @@
+<%= f.fields_for :user_profile do |profile| %>
+    <div>
+      <label for="bidding_zone_id">
+        Division
+        <em>*</em>
+      </label>
+      <%= profile.collection_select :division_id,Division.active.order("name ASC"), :id, :name,{:prompt =>'Select Division'} %>
+      <%= image_tag 'icot.gif',:class=>"tipTip1",:title => "Select Division of User from the List" %>
+      <script type="text/javascript">
+          var user_user_profile_attributes_division_id = new LiveValidation('user_user_profile_attributes_division_id');
+          user_user_profile_attributes_division_id.add(Validate.Presence)
+      </script>
+      <script type="text/javascript">
+          $(document).ready(function() {
+              $('#districts').hide();
+              $('#user_user_profile_attributes_division_id').change(function() {
+                  var data = $('#user_user_profile_attributes_division_id').val();
+                  $.ajax({
+                      type: "POST",
+                      url: "load_districts/" + data,
+                      data: data
+                  });
+
+              });
+          });
+      </script>
+
+    </div>
+    <div id="districts">
+      <label for="district_id">
+        District
+        <em>*</em>
+      </label>
+      <%= profile.collection_select :district_id, District.order("name ASC"),:id, :name,:prompt =>'Select District' %>
+
+      <%= image_tag 'icot.gif',:class=>"tipTip1",:title => "Select District of User from the List" %>
+      <script type="text/javascript">
+          var user_user_profile_attributes_district_id = new LiveValidation('user_user_profile_attributes_district_id');
+          user_user_profile_attributes_district_id.add(Validate.Presence)
+      </script>
+      <script type="text/javascript">
+          $(document).ready(function() {
+              $('#blocks').hide();
+              $('#user_user_profile_attributes_district_id').change(function() {
+                  var data = $('#user_user_profile_attributes_district_id').val();
+                  $.ajax({
+                      type: "POST",
+                      url: "load_blocks/" + data,
+                      data: data
+                  });
+
+              });
+          });
+      </script>
+
+    </div>
+    <div id="blocks">
+      <label for="csc_block_id">
+        Block<em>*</em>
+      </label>
+      <%= profile.collection_select :block_id, Block.order("name ASC"),:id, :name,:prompt =>'Select Block' %>
+      <%= image_tag 'icot.gif',:class=>"tipTip1",:title => "Select Block of User from the List" %>
+      <script type="text/javascript">
+          var user_user_profile_attributes_block_id = new LiveValidation('user_user_profile_attributes_block_id');
+          user_user_profile_attributes_block_id.add(Validate.Presence)
+      </script>
+      <script type="text/javascript">
+          $(document).ready(function() {
+              $('#panchayats').hide();
+              $('#user_user_profile_attributes_block_id').change(function() {
+                  var data = $('#user_user_profile_attributes_block_id').val();
+                  $.ajax({
+                      type: "POST",
+                      url: "load_panchayats/" + data,
+                      data: data
+                  });
+
+              });
+          });
+      </script>
+
+    </div>
+    <div id="panchayats">
+      <label for="csc_block_id">
+        Panchayat<em>*</em>
+      </label>
+      <%= profile.collection_select :panchayat_id, Panchayat.order("name ASC"),:id, :name,:prompt =>'Select Panchayat' %>
+      <%= image_tag 'icot.gif',:class=>"tipTip1",:title => "Select Panchayat of User from the List" %>
+      <script type="text/javascript">
+          var user_user_profile_attributes_panchayat_id = new LiveValidation('user_user_profile_attributes_panchayat_id');
+          user_user_profile_attributes_panchayat_id.add(Validate.Presence)
+      </script>
+    </div>
+    <%= profile.hidden_field :state_id,:value=>"1" %>
+<% end %>

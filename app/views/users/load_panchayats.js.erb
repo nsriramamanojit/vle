@@ -1,0 +1,6 @@
+$('#panchayats').show();
+$('#user_user_profile_attributes_panchayat_id').empty();
+$('#user_user_profile_attributes_panchayat_id').append($("<option></option>").attr("value","").text('Select Panchayat'));
+<% for load_panchayat in @load_panchayats %>
+$('#user_user_profile_attributes_panchayat_id').append($("<option></option>").attr("value", '<%= load_panchayat.id %>').text('<%= load_panchayat.name.titleize %>'));
+<% end %>

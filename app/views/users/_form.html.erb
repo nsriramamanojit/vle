@@ -1,32 +1,119 @@
 <div class="form-container">
-  <p class="legend">
-    <strong>Note:</strong>
-    Required fields are marked with an asterisk (<em>*</em>)
-  </p>
-  <%= simple_form_for(@user, :validate => true) do |f| %>
+  <% form_for([@user], :html => {:multipart => true}) do |f| %>
+      <p class="legend">
+        <strong>Note:</strong>
+        Required fields are marked with an asterisk (<em>*</em>)
+      </p>
       <fieldset>
-        <%= f.input :name, :label => "Full Name", :placeholder => "Full Name" %>
-        <%= f.input :father_name, :label => "Father Name", :placeholder => "Father Name/Husband Name" %>
-        <%= f.input :email, :label => "Email", :placeholder => "user@example.com" %>
-        <%= f.input :gender, :collection => [:Male, :Female], :prompt => "Select Gender" %>
-        <%= f.input :dob, :label => "DOB", :as => :date, :start_year => Date.today.year,
-                    :end_year => Date.today.year - 60,
-                    :order => [:day, :month, :year] %>
-        <%= f.input :address1, :label => "Address", :placeholder => "Address" %>
-        <%= f.input :address2, :label => "Address", :placeholder => "Address" %>
-        <%= f.input :place, :label => "Place", :placeholder => "Village / Town Name" %>
-        <%= f.input :pin, :label => "PIN", :placeholder => "PIN code Must be 6 Digits" %>
-        <%= f.input :mobile_number, :label => "Mobile", :placeholder => "Mobile Number Must be 10 Digits" %>
-        <%= f.input :phone_number, :label => "Land/Alternative Phone", :placeholder => "Phone Number" %>
-        <%= f.simple_fields_for(:user_profile) do |up| %>
-            <%= up.input :state_id,:as=>:hidden,:input_html=>{:value=>1} %>
-            <%= up.association :division, :collection => Division.active.all(:order => 'name'), :prompt => "Select Division" %>
-            <%= up.association :district, :collection => District.active.all(:order => 'name'), :prompt => "Select District" %>
-            <%= up.association :block, :prompt => "Select Revenue Block", :label => "Block" %>
-            <%= up.input :panchayat,:placeholder =>"Panchayat Name",:label=>"Panchayat" %>
-        <% end %>
+        <div>
+          <label for="name">
+            Name<em>*</em>
+          </label>
+          <%= f.text_field :name, :id => "firstname", :class => "tipTip", :title => "Enter Full Name of the User", :size => 30 %>
+          <script type="text/javascript">
+              var firstname = new LiveValidation('firstname');
+              firstname.add(Validate.Presence)
+          </script>
+        </div>
+        <div>
+          <label for="address1">
+            Date of Birth<em>*</em>
+          </label>
+          <%= f.date_select :dob, :start_year => Date.current.year-18, :end_year => 1940, :order => [:day, :month, :year], :prompt => {:day => 'Day', :month => 'Month', :year => 'Year'} %>
+          <%= image_tag 'icot.gif', :class => "tipTip1", :title => "Select User Birthday" %>
+        </div>
+        <div>
+          <label for="application_number">
+            Gender:<em>*</em>
+          </label>
+          <%= f.select :gender, options_for_select([["Male", "male"], ["Female", "female"]]), :prompt => "Select Gender" %>
+          <script type="text/javascript">
+              var user_gender = new LiveValidation('user_gender');
+              user_gender.add(Validate.Presence)
+          </script>
 
-        <%= f.submit 'Save', :disable_with => 'Please wait...' %>
+          <%= image_tag 'icot.gif', :class => "tipTip1", :title => "Select User Gender" %>
+        </div>
+        <div>
+          <label for="name">
+            Father/Husband Name<em>*</em>
+          </label>
+          <%= f.text_field :father_name, :id => "fn", :class => "tipTip", :title => "Enter Father/Husband Name.", :size => 30 %>
+          <script type="text/javascript">
+              var fn = new LiveValidation('fn');
+              fn.add(Validate.Presence)
+          </script>
+        </div>
+        <div>
+          <label for="address1">
+            H.No<em>*</em>
+          </label>
+          <%= f.text_field :address1, :id => "address1", :class => "tipTip", :title => "Enter Address", :size => 30 %>
+          <script type="text/javascript">
+              var address1 = new LiveValidation('address1');
+              address1.add(Validate.Presence)
+          </script>
+        </div>
+        <div>
+          <label for="address2">
+            Street
+          </label>
+          <%= f.text_field :address2, :class => "tipTip", :title => "Enter Address", :size => 30 %>
+        </div>
+        <div>
+          <label for="address2">
+            Area
+          </label>
+          <%= f.text_field :address3, :class => "tipTip", :title => "Enter Address", :size => 30 %>
+        </div>
+        <div>
+          <label for="place">
+            Name of the Village/Town<em>*</em>
+          </label>
+          <%= f.text_field :place, :id => "place", :class => "tipTip", :title => "Enter Name of the Village or Town", :size => 30 %>
+          <script type="text/javascript">
+              var place = new LiveValidation('place');
+              place.add(Validate.Presence)
+          </script>
+        </div>
+        <div>
+          <label for="pin">
+            PIN<em>*</em>
+          </label>
+          <%= f.text_field :pin, :id => "pin", :class => "tipTip", :title => "Enter PIN. Must Contain 6 Digits. Ex:800001", :size => 30 %>
+          <script type="text/javascript">
+              var pin = new LiveValidation('pin');
+              pin.add(Validate.Presence);
+              pin.add(Validate.Numericality, {
+                  minimum:800001,
+                  maximum:899999
+              });
+          </script>
+        </div>
+        <div>
+          <label for="phone">
+            Mobile<em>*</em>
+          </label>
+          <%= f.text_field :mobile_number, :id => "mn", :class => "tipTip", :title => "Enter Mobile Number. Must Contain 10 Digits. Ex:9885976490", :size => 30 %>
+          <script type="text/javascript">
+              var mn = new LiveValidation('mn');
+              mn.add(Validate.Presence);
+              mn.add(Validate.Numericality);
+              mn.add(Validate.Length, {
+                  is:10
+              });
+          </script>
+        </div>
+        <div>
+          <label for="pin">
+            Telephone/Alternative Mobile:
+          </label>
+          <%= f.text_field :phone_number, :class => "tipTip", :title => "Enter Telephone Number", :size => 30 %>
+        </div>
+        <%= render(:partial => 'user_profile', :locals => {:f => f}) %>
+        <div class="buttonrow">
+          <%= f.submit "Save Details", :class => "btnEdit",:disable=>"Please Wait..." %>
+        </div>
       </fieldset>
   <% end %>
 </div>

@@ -41,10 +41,16 @@ class UsersController < ApplicationController
     charset = %w{ 1 2 3 4 5 6 7 8 9 0}
     @user.verification_code = (0...7).map { charset.to_a[rand(charset.size)] }.join
 
+    district =District.find(params[:user][:user_profile_attributes][:district_id])
+    district.increment!(:dis_number)
+    vle_code= "BR" + district.short_code+"%04d" % district.dis_number
+    @user.user_profile.vle_code= vle_code
+    @user.email = vle_code.downcase.to_s + "@vedavaagcsc.in"
+
     respond_to do |format|
       if @user.save
-        sms_status
-        format.html { redirect_to(new_user_path, :notice => 'User was successfully created.') }
+        #sms_status
+        format.html { redirect_to(confirm_users_path, :notice => 'Verification code sent to Your mobile. Please enter the code to complete the registration process') }
         format.xml { render :xml => @user, :status => :created, :location => @user }
       else
         format.html { render :action => "new" }
@@ -80,7 +86,7 @@ class UsersController < ApplicationController
   def sms_status
     mobile = @user.mobile_number
     message = "Dear VLE, Your activation code for CSC Portal is "+@user.verification_code+".Please use this code to complete your registration.Vedavaag Systems Limited."
-    url = "http://voice.full2ads.co.cc/api/sms.php?uid=6368616974616e7961&pin=4e4ce8b0a500c&sender=SARKCSC&route=1&mobile=#{mobile},&message=#{message}"
+    url = "http://www.smsginger.com/sendhttp.php?user=33602&password=chaitu1479&mobiles=#{mobile}&message=#{message}&sender=VEDCSC&route=4"
     Net::HTTP.get_print URI.parse(URI.encode(url.strip))
 
   end
@@ -100,10 +106,32 @@ class UsersController < ApplicationController
         redirect_to confirm_users_path
       else
         @user.approved = true
+        @user.verification_date = Time.now.strftime('%d-%m-%Y')
+
         @user.save
-        flash[:notice] = "Congratulations. The verification code approved."
-        redirect_to confirm_users_path
+        flash[:notice] = "Congratulations. The verification code approved. Your registration is completed"
+        redirect_to new_user_path
       end
     end
+  end
+  def load_districts
+    @load_districts = District.find_all_by_division_id(params[:id])
+    respond_to do |format|
+      format.js
+    end
+  end
+  def load_blocks
+    @load_blocks = Block.find_all_by_district_id(params[:id])
+    respond_to do |format|
+      format.js
+    end
+
+  end
+  def load_panchayats
+    @load_panchayats = Panchayat.find_all_by_block_id(params[:id])
+    respond_to do |format|
+      format.js
+    end
+
   end
 end

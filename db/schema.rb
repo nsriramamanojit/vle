@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120319083352) do
+ActiveRecord::Schema.define(:version => 20120321101107) do
 
   create_table "blocks", :force => true do |t|
     t.integer  "state_id"
@@ -49,6 +49,20 @@ ActiveRecord::Schema.define(:version => 20120319083352) do
     t.integer  "status",      :default => 0
     t.integer  "created_by"
     t.integer  "updated_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "panchayats", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "state_id"
+    t.integer  "division_id"
+    t.integer  "district_id"
+    t.integer  "block_id"
+    t.boolean  "status",      :default => true
+    t.integer  "created_by"
+    t.integer  "modified_by"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

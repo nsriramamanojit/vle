@@ -1,0 +1,21 @@
+<h1>Listing panchayats</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @panchayats.each do |panchayat| %>
+  <tr>
+    <td><%= link_to 'Show', panchayat %></td>
+    <td><%= link_to 'Edit', edit_panchayat_path(panchayat) %></td>
+    <td><%= link_to 'Destroy', panchayat, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Panchayat', new_panchayat_path %>

@@ -2,8 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <title><%= content_for?(:title) ? yield(:title) : "VEDAVAAG" %></title>
-  <%= stylesheet_link_tag "application","common",'facebox','tipTip','jquery-ui-1.8.13.custom' %>
-  <%= javascript_include_tag :defaults,'rails.validations.js','facebox','jquery.tipTip.minified','jquery-ui-1.8.13.custom.min' %>
+  <%= stylesheet_link_tag "application","common",'tipTip','jquery-ui-1.8.13.custom','live_validation' %>
+  <%= javascript_include_tag :defaults,'rails.validations.js','facebox','jquery.tipTip.minified','jquery-ui-1.8.13.custom.min','livevalidation_standalone.compressed' %>
   <%= csrf_meta_tag %>
   <%= yield(:head) %>
 </head>
@@ -11,8 +11,6 @@
 <div id="page_container">
   <%= render 'common/header'%>
   <div id="page_menu">
-    <%# render 'common/menu'%>
-
   </div>
   <div id="page_content">
     <div class="content">

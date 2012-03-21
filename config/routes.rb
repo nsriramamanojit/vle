@@ -1,4 +1,6 @@
 Vle::Application.routes.draw do
+  resources :panchayats
+
   resources :blocks
 
   resources :divisions
@@ -11,5 +13,5 @@ Vle::Application.routes.draw do
   end
 
   # root :to => "welcome#index"
-  # match ':controller(/:action(/:id(.:format)))'
+  match ':controller(/:action(/:id(.:format)))'
 end
