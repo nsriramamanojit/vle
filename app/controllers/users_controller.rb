@@ -47,15 +47,10 @@ class UsersController < ApplicationController
       charset = %w{ 1 2 3 4 5 6 7 8 9 0}
       @user.verification_code = (0...7).map { charset.to_a[rand(charset.size)] }.join
 
-      district =District.find(params[:user][:user_profile_attributes][:district_id])
-      district.increment!(:dis_number)
-      vle_code= "BR" + district.short_code+"%04d" % district.dis_number
-      @user.user_profile.vle_code= vle_code
-      @user.email = vle_code.downcase.to_s + "@vedavaagcsc.in"
 
       respond_to do |format|
         if @user.save
-          sms_status
+          #sms_status
           format.html { redirect_to(confirm_users_path, :notice => 'Verification code sent to Your mobile. Please enter the code to complete the registration process') }
           format.xml { render :xml => @user, :status => :created, :location => @user }
         else
@@ -116,6 +111,12 @@ class UsersController < ApplicationController
         flash[:error] = "The code is already verified."
         redirect_to confirm_users_path
       else
+        district =District.find(@user.user_profile.district_id)
+        district.increment!(:dis_number)
+        vle_code= "BR" + district.short_code+"%04d" % district.dis_number
+        @user.user_profile.vle_code= vle_code
+        @user.email = vle_code.downcase.to_s + "@vedavaagcsc.in"
+
         @user.approved = true
         @user.verification_date = Time.now.strftime('%d-%m-%Y')
 
