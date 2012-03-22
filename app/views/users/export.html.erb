@@ -20,7 +20,7 @@
         <td><%= i %></td>
         <td><%=  user.approved? ? "A" : "P" %></td>
         
-        <td><%= user.email %></td>
+        <td><%# user.email %></td>
         <td><%= user.name.titleize %></td>
         <% if user.user_profile.blank? %>
             <td></td>
