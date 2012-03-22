@@ -3,6 +3,7 @@
   <thead>
   <tr>
     <th>#</th>
+    <th>Verified?</th>
     <th>Email</th>
     <th>Name</th>
     <th>State</th>
@@ -17,6 +18,8 @@
   <% @users.each do |user| %>
       <tr>
         <td><%= i %></td>
+        <td><%=  user.approved? ? "A" : "P" %></td>
+        
         <td><%= user.email %></td>
         <td><%= user.name.titleize %></td>
         <% if user.user_profile.blank? %>
