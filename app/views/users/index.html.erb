@@ -40,7 +40,7 @@
             <td><%= i %></td>
             <td>                <%= user.approved? ? image_tag('tick.gif') : image_tag('cross.gif') %>
             </td>
-            <td><%# user.email %></td>
+            <td><%= user.email %></td>
             <td><%= highlight(user.name.titleize, params[:search]) %></td>
             <td>
               BIHAR
