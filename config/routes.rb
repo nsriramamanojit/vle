@@ -10,6 +10,7 @@ Vle::Application.routes.draw do
   resources :users  do
     get :confirm,:on=>:collection
     post :verification,:on=>:collection
+    get :export,:on=>:collection
   end
 
   # root :to => "welcome#index"

@@ -2,5 +2,5 @@ $('#blocks').show();
 $('#user_user_profile_attributes_block_id').empty();
 $('#user_user_profile_attributes_block_id').append($("<option></option>").attr("value","").text('Select Block'));
 <% for load_block in @load_blocks %>
-$('#user_user_profile_attributes_block_id').append($("<option></option>").attr("value", '<%= load_block.id %>').text('<%= load_block.name %>'));
+$('#user_user_profile_attributes_block_id').append($("<option></option>").attr("value", '<%= load_block.id %>').text('<%= load_block.name.titleize %>'));
 <% end %>

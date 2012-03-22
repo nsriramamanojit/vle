@@ -1,0 +1,70 @@
+<h5 align="center"> List of VLE Registered</h5>
+<table class="tablesorter1" align="center">
+  <thead>
+  <tr>
+    <th>#</th>
+    <th>Email</th>
+    <th>Name</th>
+    <th>State</th>
+    <th>District</th>
+    <th>Block</th>
+    <th>Panchayat</th>
+    <th>Mobile</th>
+
+  </tr>
+  </thead>
+  <% i=1 %>
+  <% @users.each do |user| %>
+      <tr>
+        <td><%= i %></td>
+        <td><%= user.email %></td>
+        <td><%= user.name.titleize %></td>
+        <% if user.user_profile.blank? %>
+            <td></td>
+            <td></td>
+            <td></td>
+        <% else %>
+            <td>BIHAR</td>
+            <% if user.user_profile.district_id? %>
+                <td><%= user.user_profile.district.name.titleize %></td>
+            <%else%>
+                <td></td>
+            <%end%>
+            <% if user.user_profile.block_id? %>
+                <td><%= user.user_profile.block.name.titleize %></td>
+            <% else %>
+                <td></td>
+            <%end%>
+            <% if user.user_profile.panchayat_id? %>
+                <td><%= user.user_profile.panchayat.name.titleize %></td>
+            <% else %>
+                <td></td>
+            <%end%>
+        <% end %>
+        <td><%= user.mobile_number %></td>
+
+      </tr>
+      <% i = i + 1 %>
+  <% end %>
+
+</table>
+
+<style type="text/css">
+    table.tablesorter1 {
+        border-collapse: collapse;
+        border: 1px solid #000000;
+        font-family: Tahoma, verdana, helvetica, sans-serif;
+        font-size: 14px;
+    }
+
+    table.tablesorter1 td, table.tablesorter1 th {
+        border-collapse: collapse;
+        border: 1px solid #000000;
+        text-align: center;
+    }
+
+    h5 {
+        font-family: Tahoma, verdana, helvetica, sans-serif;
+    }
+
+</style>

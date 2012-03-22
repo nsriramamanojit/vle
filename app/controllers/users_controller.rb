@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 ####################################
 
   def index
-    @users = User.all
+    @users = User.search(params[:search]).paginate(:page =>params[:page], :per_page=>20)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -38,24 +38,35 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(params[:user])
-    charset = %w{ 1 2 3 4 5 6 7 8 9 0}
-    @user.verification_code = (0...7).map { charset.to_a[rand(charset.size)] }.join
 
-    district =District.find(params[:user][:user_profile_attributes][:district_id])
-    district.increment!(:dis_number)
-    vle_code= "BR" + district.short_code+"%04d" % district.dis_number
-    @user.user_profile.vle_code= vle_code
-    @user.email = vle_code.downcase.to_s + "@vedavaagcsc.in"
+    @panchayat = UserProfile.where(:panchayat_id => params[:user][:user_profile_attributes][:panchayat_id])
 
-    respond_to do |format|
-      if @user.save
-        sms_status
-        format.html { redirect_to(confirm_users_path, :notice => 'Verification code sent to Your mobile. Please enter the code to complete the registration process') }
-        format.xml { render :xml => @user, :status => :created, :location => @user }
-      else
-        format.html { render :action => "new" }
-        format.xml { render :xml => @user.errors, :status => :unprocessable_entity }
+
+    if @panchayat.blank?
+
+      charset = %w{ 1 2 3 4 5 6 7 8 9 0}
+      @user.verification_code = (0...7).map { charset.to_a[rand(charset.size)] }.join
+
+      district =District.find(params[:user][:user_profile_attributes][:district_id])
+      district.increment!(:dis_number)
+      vle_code= "BR" + district.short_code+"%04d" % district.dis_number
+      @user.user_profile.vle_code= vle_code
+      @user.email = vle_code.downcase.to_s + "@vedavaagcsc.in"
+
+      respond_to do |format|
+        if @user.save
+          sms_status
+          format.html { redirect_to(confirm_users_path, :notice => 'Verification code sent to Your mobile. Please enter the code to complete the registration process') }
+          format.xml { render :xml => @user, :status => :created, :location => @user }
+        else
+          format.html { render :action => "new" }
+          format.xml { render :xml => @user.errors, :status => :unprocessable_entity }
+        end
       end
+    else
+      flash[:error] = "The panchayat Already Registered. Your registration cannot be accepted"
+      redirect_to new_user_path
+
     end
   end
 
@@ -115,23 +126,30 @@ class UsersController < ApplicationController
     end
   end
   def load_districts
-    @load_districts = District.find_all_by_division_id(params[:id])
+    @load_districts = District.where(:division_id => (params[:id]) ).order("name ASC")
     respond_to do |format|
       format.js
     end
   end
   def load_blocks
-    @load_blocks = Block.find_all_by_district_id(params[:id])
+    @load_blocks = Block.where(:district_id => (params[:id])).order("name ASC")
     respond_to do |format|
       format.js
     end
 
   end
   def load_panchayats
-    @load_panchayats = Panchayat.find_all_by_block_id(params[:id])
+    @load_panchayats = Panchayat.where(:block_id => (params[:id])).order("name ASC")
+
     respond_to do |format|
       format.js
     end
 
+  end
+  def export
+    @users = User.all
+    html = render_to_string :layout => false
+    kit = PDFKit.new(html, :orientation => 'Landscape', :page_size => 'A4')
+    send_data(kit.to_pdf, :filename => "Users_List"+".pdf", :type => 'application/pdf')
   end
 end

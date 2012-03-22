@@ -2,5 +2,5 @@ $('#districts').show();
 $('#user_user_profile_attributes_district_id').empty();
 $('#user_user_profile_attributes_district_id').append($("<option></option>").attr("value","").text('Select District'));
 <% for load_district in @load_districts %>
-$('#user_user_profile_attributes_district_id').append($("<option></option>").attr("value", '<%= load_district.id %>').text('<%= load_district.name %>'));
+$('#user_user_profile_attributes_district_id').append($("<option></option>").attr("value", '<%= load_district.id %>').text('<%= load_district.name.titleize %>'));
 <% end %>

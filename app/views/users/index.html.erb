@@ -1,21 +1,78 @@
-<h1>Listing users</h1>
+<% title "VEDAVAAG | VLE" %>
+<h3>VEDAVAAG | VLE | VLE Registrations</h3>
 
-<table>
-  <tr>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @users.each do |user| %>
-  <tr>
-    <td><%= link_to 'Show', user %></td>
-    <td><%= link_to 'Edit', edit_user_path(user) %></td>
-    <td><%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+<% content_for :left_panel do %>
+    <td valign="top" width="250"> <%= render 'common/search' %>
+      <%# render 'recent' %> </td>
 <% end %>
-</table>
+<div class="help_text">
+  Area for managing Users. <br/>
+  Along with creating, managing Users for Application.
+</div>
+<div class="link_buttons">
+  <%= link_to content_tag(:span, 'Export'), export_users_path, :class => 'btn-yellow'%>
+</div>
 
-<br />
+<% if @users.blank? %>
+    <div class="error_msg">
+      OOPS!.. No Users are Found in the System..!
+    </div>
+<% else %>
+    <table class="tablesorter">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Verified?</th>
+        <th>Email</th>
+        <th>Name</th>
+        <th>State</th>
+        <th>District</th>
+        <th>Block</th>
+        <th>Panchayat</th>
+        <th>Mobile</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% i=1 %>
+      <% @users.each do |user| %>
+          <tr>
+            <td><%= i %></td>
+            <td>                <%= user.approved? ? image_tag('tick.gif') : image_tag('cross.gif') %>
+            </td>
+            <td><%= user.email %></td>
+            <td><%= highlight(user.name.titleize, params[:search]) %></td>
+            <td>
+              BIHAR
+            </td>
+            <td>
+              <%= user.user_profile.blank? ? 'N.A' : (user.user_profile.district_id? ? user.user_profile.district.name.titleize : 'N.A') %>
+            </td>
+            <td>
+              <%= user.user_profile.blank? ? 'N.A' : (user.user_profile.block_id? ? user.user_profile.block.name.titleize : 'N.A') %>
+            </td>
+            <td>
+              <%= user.user_profile.blank? ? 'N.A' : (user.user_profile.panchayat_id? ? user.user_profile.panchayat.name.titleize : 'N.A') %>
+            </td>
+            <td><%= user.mobile_number %></td>
+            <td>
+              <%= link_to "View",user, :class => 'usuallink bold_text' %>
 
-<%= link_to 'New User', new_user_path %>
+            </td>
+          </tr>
+          <% i = i + 1 %>
+      <% end %>
+      </tbody>
+    </table>
+    <div class="flickr_pagination">
+      <%= page_entries_info @users %> <%= will_paginate @users, :container => false %>
+    </div>
+<% end %>
+
+
+
+
+
+
+
+

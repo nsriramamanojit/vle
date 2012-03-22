@@ -1,5 +1,72 @@
-<p id="notice"><%= notice %></p>
+<% title "VEDAVAAG | User" %>
+<div id="page_container">
+  <div id="page_content">
+    <div class="content">
+      <h3>VEDAVAAG | View VLE Details</h3>
 
+      <table width="100%" border=0 cellspacing=1 cellpadding=3 class="listTable">
+        <tr>
+          <th width="20%">Email</th>
+          <td><%= @user.email %></td>
+        </tr>
+        <tr>
+          <th width="20%">Name</th>
+          <td><%= @user.name %></td>
+        </tr>
+        <tr>
+          <th width="20%">Father Name</th>
+          <td><%= @user.father_name %></td>
+        </tr>
+        <tr>
+          <th width="20%">Gender</th>
+          <td><%= @user.gender.titleize %></td>
+        </tr>
+        <tr>
+          <th width="20%">Date of Birth</th>
+          <td><%= @user.dob? ? @user.dob.strftime('%d-%m-%Y') : "" %></td>
+        </tr>
+        <tr>
+          <th width="20%">Address</th>
+          <td><%= @user.address1? ? @user.address1.titleize : "" %></td>
+        </tr>
+        <tr>
+          <th width="20%"></th>
+          <td><%= @user.address2? ? @user.address2.titleize : "" %></td>
+        </tr>
+        <tr>
+          <th width="20%"></th>
+          <td><%= @user.address3? ? @user.address3.titleize : "" %></td>
+        </tr>
+        <tr>
+          <th width="20%">Place</th>
+          <td><%= @user.place? ? @user.place.titleize : "" %></td>
+        </tr>
+        <tr>
+          <th width="20%">PIN</th>
+          <td><%= @user.pin %></td>
+        </tr>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+        <tr>
+          <th width="20%">Mobile</th>
+          <td><%= @user.mobile_number %></td>
+        </tr>
+        <tr>
+          <th width="20%">District</th>
+          <td><%= @user.user_profile.district_id? ? @user.user_profile.district.name.titleize : 'N.A' %></td>
+        </tr>
+        <tr>
+          <th width="20%">Block</th>
+          <td><%= @user.user_profile.block_id? ? @user.user_profile.block.name.titleize : 'N.A' %></td>
+        </tr>
+        <tr>
+          <th width="20%">Panchayat</th>
+          <td><%= @user.user_profile.panchayat_id ? @user.user_profile.panchayat.name.titleize : 'N.A' %></td>
+        </tr>
+      </table>
+      <div class="link_buttons">
+        <%= link_to content_tag(:span, 'Back'), users_path, :class => 'btn-yellow'%>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -8,4 +8,18 @@ class User < ActiveRecord::Base
   validates :mobile_number, :presence => true, :length => {:maximum => 10}#,:uniqueness => true
   validates :phone_number, :length => {:maximum => 10}
   validates :pin, :length => {:maximum => 6},:presence => true
+
+  #Recent and Search
+  class << self
+    def recent
+      order('id DESC').limit(4)
+    end
+    def search(query)
+      if query
+        where(:name.matches => "%#{query}%") #from meta_where gem
+      else
+        scoped
+      end
+    end
+  end
 end
