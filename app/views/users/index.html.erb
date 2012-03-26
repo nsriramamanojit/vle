@@ -25,7 +25,6 @@
         <th>Verified?</th>
         <th>Email</th>
         <th>Name</th>
-        <th>State</th>
         <th>Division</th>
         <th>District</th>
         <th>Block</th>
@@ -43,9 +42,6 @@
             </td>
             <td><%# user.email %></td>
             <td><%= highlight(user.name.titleize, params[:search]) %></td>
-            <td>
-              BIHAR
-            </td>
             <td>
               <%= user.user_profile.blank? ? 'N.A' : (user.user_profile.division_id? ? user.user_profile.division.name.titleize : 'N.A') %>
             </td>
