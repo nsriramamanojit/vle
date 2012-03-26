@@ -3,7 +3,7 @@
 
 <% content_for :left_panel do %>
     <td valign="top" width="250"> <%= render 'common/search' %>
-      <%# render 'recent' %> </td>
+      <%#render 'recent' %> </td>
 <% end %>
 <div class="help_text">
   Area for managing Users. <br/>
@@ -26,6 +26,7 @@
         <th>Email</th>
         <th>Name</th>
         <th>State</th>
+        <th>Division</th>
         <th>District</th>
         <th>Block</th>
         <th>Panchayat</th>
@@ -44,6 +45,9 @@
             <td><%= highlight(user.name.titleize, params[:search]) %></td>
             <td>
               BIHAR
+            </td>
+            <td>
+              <%= user.user_profile.blank? ? 'N.A' : (user.user_profile.division_id? ? user.user_profile.division.name.titleize : 'N.A') %>
             </td>
             <td>
               <%= user.user_profile.blank? ? 'N.A' : (user.user_profile.district_id? ? user.user_profile.district.name.titleize : 'N.A') %>
