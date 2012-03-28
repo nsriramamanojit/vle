@@ -6,7 +6,6 @@
     <th>Verified?</th>
     <th>Email</th>
     <th>Name</th>
-    <th>State</th>
     <th>District</th>
     <th>Block</th>
     <th>Panchayat</th>
@@ -27,7 +26,6 @@
             <td></td>
             <td></td>
         <% else %>
-            <td>BIHAR</td>
             <% if user.user_profile.district_id? %>
                 <td><%= user.user_profile.district.name.titleize %></td>
             <%else%>
