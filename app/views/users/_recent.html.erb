@@ -1,0 +1,29 @@
+<div class="recent_items">
+  <div class="margin">
+    <h3>Users Report</h3>
+    <% if @users.blank? %>
+        No Divisions Added Yet...
+    <% else %>
+            <div id="margin">
+              <div class="left">&nbsp;</div>
+              <div class="right">&nbsp;</div>
+              <div class="left-to-right">
+                <div class="text">
+                  <%= link_to "Verifited Users - ( #{User.where(:approved => true).size} )", "#", :class=>'usuallink tipTipRight' %>
+                  <div style="margin: 8px 0px;">&nbsp;</div>
+                </div>
+              </div>
+            </div>
+            <div id="margin">
+              <div class="left">&nbsp;</div>
+              <div class="right">&nbsp;</div>
+              <div class="left-to-right">
+                <div class="text">
+                  <%= link_to "Pending Users - ( #{User.where(:approved => false).size} )", "#", :class=>'usuallink tipTipRight' %>
+                  <div style="margin: 8px 0px;">&nbsp;</div>
+                </div>
+              </div>
+            </div>
+    <% end %>
+  </div>
+</div>
