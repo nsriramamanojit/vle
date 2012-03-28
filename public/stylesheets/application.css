@@ -885,7 +885,6 @@ table.tablesorter thead tr .headerSortDown {
 }
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
     background-color: #8dbdd8;
-    text-decoration:underline;
 }
 table.tablesorter tbody tr {
     background-color: #fff;
