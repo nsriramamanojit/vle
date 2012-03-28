@@ -4,3 +4,6 @@ $(function() {
     $(".tipTip1").tipTip({maxWidth: "auto", edgeOffset: 10,defaultPosition: "right"});
     $(".tipTip2").tipTip({maxWidth: "auto", edgeOffset: 10});
 });
+
+
+
