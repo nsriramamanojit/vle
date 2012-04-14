@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 ####################################
 
   def index
-    @users = User.search(params[:search]).paginate(:page =>params[:page], :per_page=>20)
+    @users = User.search(params[:search]).paginate(:page => params[:page], :per_page => 20)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -100,11 +100,12 @@ class UsersController < ApplicationController
   def confirm
     render
   end
+
   def verification
     @user = User.where(:verification_code => params[:verification_code]).first
 
     if @user.blank?
-     flash[:error] = "Invalid verification code. Please check once again"
+      flash[:error] = "Invalid verification code. Please check once again"
       redirect_to confirm_users_path
     else
       if @user.approved?
@@ -126,12 +127,14 @@ class UsersController < ApplicationController
       end
     end
   end
+
   def load_districts
-    @load_districts = District.where(:division_id => (params[:id]) ).order("name ASC")
+    @load_districts = District.where(:division_id => (params[:id])).order("name ASC")
     respond_to do |format|
       format.js
     end
   end
+
   def load_blocks
     @load_blocks = Block.where(:district_id => (params[:id])).order("name ASC")
     respond_to do |format|
@@ -139,6 +142,7 @@ class UsersController < ApplicationController
     end
 
   end
+
   def load_panchayats
     @load_panchayats = Panchayat.where(:block_id => (params[:id])).order("name ASC")
 
@@ -147,10 +151,29 @@ class UsersController < ApplicationController
     end
 
   end
+
   def export
     @users = User.all
     html = render_to_string :layout => false
     kit = PDFKit.new(html, :orientation => 'Landscape', :page_size => 'A4')
     send_data(kit.to_pdf, :filename => "Users_List"+".pdf", :type => 'application/pdf')
   end
+
+  def export_csv
+    require 'csv'
+    @users = User.order('approved ASC')
+    outfile = "User Report" + Time.now.strftime("%d-%m-%Y") + ".csv"
+    csv_data = CSV.generate do |csv|
+      csv << ["Status", "Name",  "Mobile", "Division", "District", "Block", "Panchayat"]
+      @users.each do |user|
+        csv << [user.approved? ? 'A' : 'P', user.name.titleize,  user.mobile_number, user.user_profile.division.name.titleize, user.user_profile.district.name.titleize, user.user_profile.block_id? ? user.user_profile.block.name.titleize : 'None', user.user_profile.panchayat.name.titleize]
+      end
+    end
+    send_data csv_data,
+              :type => 'text/csv; charset=iso-8859-1; header=present',
+              :disposition => "attachment; filename=#{outfile}"
+
+  end
+
 end
+

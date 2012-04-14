@@ -10,7 +10,8 @@
   Along with creating, managing Users for Application.
 </div>
 <div class="link_buttons">
-  <%= link_to content_tag(:span, 'Export'), export_users_path, :class => 'btn-yellow'%>
+  <%= link_to content_tag(:span, 'Export PDF'), export_users_path, :class => 'btn-yellow' %>
+  <%= link_to content_tag(:span, 'Export CSV'), export_csv_users_path, :class => 'btn-yellow' %>
 </div>
 
 <% if @users.blank? %>
@@ -38,7 +39,7 @@
       <% @users.each do |user| %>
           <tr>
             <td><%= i %></td>
-            <td>                <%= user.approved? ? image_tag('tick.gif') : image_tag('cross.gif') %>
+            <td><%= user.approved? ? image_tag('tick.gif') : image_tag('cross.gif') %>
             </td>
             <td><%# user.email %></td>
             <td><%= highlight(user.name.titleize, params[:search]) %></td>
@@ -56,7 +57,7 @@
             </td>
             <td><%= user.mobile_number %></td>
             <td>
-              <%= link_to "View",user, :class => 'usuallink bold_text' %>
+              <%= link_to "View", user, :class => 'usuallink bold_text' %>
 
             </td>
           </tr>
@@ -70,14 +71,12 @@
 <% end %>
 
 <script type="text/javascript">
-    $(document).ready(function()
-            {
-                $("#myTable").tablesorter({headers: { 0: { sorter: false},1: { sorter: false},9: { sorter: false}}}
+    $(document).ready(function () {
+                $("#myTable").tablesorter({headers:{ 0:{ sorter:false}, 1:{ sorter:false}, 9:{ sorter:false}}}
 
                 );
 
             }
-
     );
 </script>
 
