@@ -1,10 +1,47 @@
-<%= simple_form_for(@panchayat) do |f| %>
-  <%= f.error_notification %>
+<div class="form-container">
+  <p class="legend">
+    <strong>Note:</strong>
+    Required fields are marked with an asterisk (<em>*</em>)
+  </p>
+  <%= simple_form_for(@panchayat, :validate => true) do |f| %>
+      <fieldset>
+        <%= f.input :name, :label => "Name", :placeholder => "Panchayat Name" %>
+        <%= f.association :division, :collection => Division.all(:order => 'name'), :prompt => "Choose a Division", :label_method => lambda { |state| "#{state.name.titleize} " }, :label => "Select Division" %>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#district').hide();
+                $('#panchayat_division_id').change(function () {
+                    var data = $('#panchayat_division_id').val();
+                    $.ajax({
+                        type:"POST",
+                        url:"load_districts/" + data,
+                        data:data
+                    });
+                });
+            });
+        </script>
+        <div id="district">
+          <%= f.association :district, :collection => District.all(:order => 'name'), :prompt => "Choose a District", :label_method => lambda { |district| "#{district.name.titleize} " }, :label => "Select District" %>
+          <script type="text/javascript">
+              $(document).ready(function () {
+                  $('#block').hide();
+                  $('#panchayat_district_id').change(function () {
+                      var data = $('#panchayat_district_id').val();
+                      $.ajax({
+                          type:"POST",
+                          url:"load_blocks/" + data,
+                          data:data
+                      });
+                  });
+              });
+          </script>
 
-  <div class="inputs">
-  </div>
+        </div>
+        <div id="block">
+          <%= f.association :block, :collection => Block.all(:order => 'name'), :prompt => "Choose a Block", :label_method => lambda { |district| "#{district.name.titleize} " }, :label => "Select Block" %>
 
-  <div class="actions">
-    <%= f.button :submit %>
-  </div>
-<% end %>
+        </div>
+        <%= f.submit 'Save', :disable_with => 'Please wait...' %>
+      </fieldset>
+  <% end %>
+</div>

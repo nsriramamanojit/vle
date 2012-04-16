@@ -1,10 +1,30 @@
-<%= simple_form_for(@block) do |f| %>
-  <%= f.error_notification %>
+<div class="form-container">
+  <p class="legend">
+    <strong>Note:</strong>
+    Required fields are marked with an asterisk (<em>*</em>)
+  </p>
+  <%= simple_form_for(@block, :validate => true) do |f| %>
+      <fieldset>
+        <%= f.input :name, :label => "Name", :placeholder => "Block Name" %>
+        <%= f.association :division, :collection => Division.all(:order => 'name'), :prompt => "Choose a Division", :label_method => lambda { |state| "#{state.name.titleize} " }, :label => "Select Division" %>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#district').hide();
+                $('#block_division_id').change(function () {
+                    var data = $('#block_division_id').val();
+                    $.ajax({
+                        type:"POST",
+                        url:"load_districts/" + data,
+                        data:data
+                    });
+                });
+            });
+        </script>
+        <div id="district">
+          <%= f.association :district, :collection => District.all(:order => 'name'), :prompt => "Choose a District", :label_method => lambda { |district| "#{district.name.titleize} " }, :label => "Select District" %>
+        </div>
 
-  <div class="inputs">
-  </div>
-
-  <div class="actions">
-    <%= f.button :submit %>
-  </div>
-<% end %>
+        <%= f.submit 'Save', :disable_with => 'Please wait...' %>
+      </fieldset>
+  <% end %>
+</div>

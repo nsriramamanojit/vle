@@ -1,0 +1,6 @@
+$('#block').show();
+$('#panchayat_block_id').empty();
+$('#panchayat_block_id').append($("<option></option>").attr("value","").text('Select Block'));
+<% for load_district in @load_blocks %>
+$('#panchayat_block_id').append($("<option></option>").attr("value", '<%= load_district.id %>').text('<%= load_district.name.titleize %>'));
+<% end %>

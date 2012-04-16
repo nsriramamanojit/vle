@@ -1,0 +1,6 @@
+$('#district').show();
+$('#block_district_id').empty();
+$('#block_district_id').append($("<option></option>").attr("value","").text('Select District'));
+<% for load_district in @load_districts %>
+$('#block_district_id').append($("<option></option>").attr("value", '<%= load_district.id %>').text('<%= load_district.name.titleize %>'));
+<% end %>

@@ -1,8 +1,6 @@
 class PanchayatsController < ApplicationController
-  # GET /panchayats
-  # GET /panchayats.xml
   def index
-    @panchayats = Panchayat.all
+    @panchayats = Panchayat.search(params[:search]).paginate(:page => params[:page], :per_page => 20)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -10,8 +8,6 @@ class PanchayatsController < ApplicationController
     end
   end
 
-  # GET /panchayats/1
-  # GET /panchayats/1.xml
   def show
     @panchayat = Panchayat.find(params[:id])
 
@@ -21,8 +17,6 @@ class PanchayatsController < ApplicationController
     end
   end
 
-  # GET /panchayats/new
-  # GET /panchayats/new.xml
   def new
     @panchayat = Panchayat.new
 
@@ -32,19 +26,17 @@ class PanchayatsController < ApplicationController
     end
   end
 
-  # GET /panchayats/1/edit
   def edit
     @panchayat = Panchayat.find(params[:id])
   end
 
-  # POST /panchayats
-  # POST /panchayats.xml
   def create
     @panchayat = Panchayat.new(params[:panchayat])
+    @panchayat.state_id = 1
 
     respond_to do |format|
       if @panchayat.save
-        format.html { redirect_to(@panchayat, :notice => 'Panchayat was successfully created.') }
+        format.html { redirect_to(panchayats_url, :notice => 'Panchayat was successfully created.') }
         format.xml  { render :xml => @panchayat, :status => :created, :location => @panchayat }
       else
         format.html { render :action => "new" }
@@ -53,8 +45,7 @@ class PanchayatsController < ApplicationController
     end
   end
 
-  # PUT /panchayats/1
-  # PUT /panchayats/1.xml
+
   def update
     @panchayat = Panchayat.find(params[:id])
 
@@ -80,4 +71,17 @@ class PanchayatsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  def load_districts
+    @load_districts = District.where(:division_id => params[:id]).order("name ASC")
+    respond_to do |format|
+      format.js
+    end
+  end
+  def load_blocks
+    @load_blocks = Block.where(:district_id => params[:id]).order("name ASC")
+    respond_to do |format|
+      format.js
+    end
+  end
+
 end

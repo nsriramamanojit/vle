@@ -1,21 +1,67 @@
-<h1>Listing blocks</h1>
+<% title "VEDAVAAG | VLE" %>
+<h3>VEDAVAAG | Blocks | Manage Blocks</h3>
 
-<table>
-  <tr>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @blocks.each do |block| %>
-  <tr>
-    <td><%= link_to 'Show', block %></td>
-    <td><%= link_to 'Edit', edit_block_path(block) %></td>
-    <td><%= link_to 'Destroy', block, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+<% content_for :left_panel do %>
+    <td valign="top" width="250"> <%= render 'common/search' %>
+      <%= render 'recent' %> </td>
 <% end %>
-</table>
+<div class="help_text">
+  Area for managing blocks. <br/>
+  Along with creating, managing Blocks for Application.
+</div>
+<div class="link_buttons">
+  <%= link_to content_tag(:span, 'Users'), users_path, :class => 'btn-yellow' %>
+  <%= link_to content_tag(:span, 'New Block'), new_block_path, :class => 'btn-yellow' %>
+</div>
 
-<br />
+<% if @blocks.blank? %>
+    <div class="error_msg">
+      OOPS!.. No Blocks are Found in the System..!
+    </div>
+<% else %>
+    <table class="tablesorter" id="myTable">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>District</th>
+        <th>Division</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% i=1 %>
+      <% @blocks.each do |block| %>
+          <tr>
+            <td><%= i %></td>
+            <td><%= highlight(block.name.titleize, params[:search]) %></td>
+            <td><%= highlight(block.district.name.titleize, params[:search]) %></td>
+            <td><%= highlight(block.division.name.titleize, params[:search]) %></td>
+            <td>
+              <%= link_to "View", block, :class => 'usuallink bold_text' %>
 
-<%= link_to 'New Block', new_block_path %>
+            </td>
+          </tr>
+          <% i = i + 1 %>
+      <% end %>
+      </tbody>
+    </table>
+
+<% end %>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+                $("#myTable").tablesorter({headers:{ 0:{ sorter:false}, 4:{ sorter:false}}}
+
+                );
+
+            }
+    );
+</script>
+
+
+
+
+
+
+

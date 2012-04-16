@@ -1,21 +1,66 @@
-<h1>Listing districts</h1>
+<% title "VEDAVAAG | VLE" %>
+<h3>VEDAVAAG | Districts | Manage Districts</h3>
 
-<table>
-  <tr>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @districts.each do |district| %>
-  <tr>
-    <td><%= link_to 'Show', district %></td>
-    <td><%= link_to 'Edit', edit_district_path(district) %></td>
-    <td><%= link_to 'Destroy', district, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+<% content_for :left_panel do %>
+    <td valign="top" width="250"> <%= render 'common/search' %>
+      <%= render 'recent' %> </td>
 <% end %>
-</table>
+<div class="help_text">
+  Area for managing Districts. <br/>
+  Along with creating, managing Districts for Application.
+</div>
+<div class="link_buttons">
+  <%= link_to content_tag(:span, 'Users'), users_path, :class => 'btn-yellow' %>
+</div>
 
-<br />
+<% if @districts.blank? %>
+    <div class="error_msg">
+      OOPS!.. No Users are Found in the System..!
+    </div>
+<% else %>
+    <table class="tablesorter" id="myTable">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Division</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% i=1 %>
+      <% @districts.each do |district| %>
+          <tr>
+            <td><%= i %></td>
+            <td><%= district.name.titleize %></td>
+            <td><%= district.division.name.titleize %></td>
+            <td>
+              <%= link_to "View", district, :class => 'usuallink bold_text' %>
 
-<%= link_to 'New District', new_district_path %>
+            </td>
+          </tr>
+          <% i = i + 1 %>
+      <% end %>
+      </tbody>
+    </table>
+    <div class="flickr_pagination">
+      <%= page_entries_info @districts %> <%= will_paginate @districts, :container => false %>
+    </div>
+<% end %>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+                $("#myTable").tablesorter({headers:{ 0:{ sorter:false},  3:{ sorter:false}}}
+
+                );
+
+            }
+    );
+</script>
+
+
+
+
+
+
+
