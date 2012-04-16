@@ -10,8 +10,9 @@
   Along with creating, managing Users for Application.
 </div>
 <div class="link_buttons">
-  <%= link_to content_tag(:span, 'Export PDF'), export_users_path, :class => 'btn-yellow' %>
-  <%= link_to content_tag(:span, 'Export CSV'), export_csv_users_path, :class => 'btn-yellow' %>
+  <%= link_to content_tag(:span, 'All Users'), users_path, :class => 'btn-yellow' %>
+  <%= link_to content_tag(:span, 'Export Pending'), pending_export_users_path, :class => 'btn-yellow' %>
+
 </div>
 
 <% if @users.blank? %>

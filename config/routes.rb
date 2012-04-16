@@ -12,6 +12,8 @@ Vle::Application.routes.draw do
     post :verification,:on=>:collection
     get :export,:on=>:collection
     get :export_csv,:on=>:collection
+    get :pending,:on=>:collection
+    get :pending_export,:on=>:collection
   end
 
   # root :to => "welcome#index"

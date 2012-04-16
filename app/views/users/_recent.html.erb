@@ -19,7 +19,7 @@
               <div class="right">&nbsp;</div>
               <div class="left-to-right">
                 <div class="text">
-                  <%= link_to "Pending Users - ( #{User.where(:approved => false).size} )", "#", :class=>'usuallink tipTipRight' %>
+                  <%= link_to "Pending Users - ( #{User.where(:approved => false).size} )", pending_users_path, :class=>'usuallink tipTipRight' %>
                   <div style="margin: 8px 0px;">&nbsp;</div>
                 </div>
               </div>

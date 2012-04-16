@@ -174,6 +174,15 @@ class UsersController < ApplicationController
               :disposition => "attachment; filename=#{outfile}"
 
   end
+  def pending
+    @users = User.where(:approved => false).search(params[:search]).paginate(:page => params[:page], :per_page => 20)
+  end
+  def pending_export
+    @users = User.where(:approved => false)
+    html = render_to_string :layout => false
+    kit = PDFKit.new(html, :orientation => 'Landscape', :page_size => 'A4')
+    send_data(kit.to_pdf, :filename => "Users_Pending_List"+".pdf", :type => 'application/pdf')
 
+  end
 end
 
